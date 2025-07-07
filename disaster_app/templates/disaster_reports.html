@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Reports</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .report-container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-title {
+            font-weight: bold;
+            text-align: center;
+            color: red;
+        }
+
+        .report-item {
+            background: #fff3f3;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .report-item h4 {
+            margin: 0;
+            color: darkred;
+        }
+
+        .report-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center text-danger fw-bold">🚨 Disaster Reports</h2>
+    <p class="text-center text-muted">Stay updated with the latest disaster reports and past incidents.</p>
+
+    <!-- Active Disasters Section -->
+    <div class="card mb-4 shadow-lg">
+        <div class="card-header bg-danger text-white">
+            <h4><i class="fas fa-exclamation-triangle"></i> Active Disasters (Last 24 Hours)</h4>
+        </div>
+        <div class="card-body">
+            {% if active_disasters %}
+                <ul class="list-group">
+                    {% for report in active_disasters %}
+                        <li class="list-group-item">
+                            <h5 class="text-danger"><i class="fas fa-fire"></i> {{ report.disaster_type }}</h5>
+                            <p><strong>Location:</strong> {{ report.location }}</p>
+                            <p><strong>Description:</strong> {{ report.description }}</p>
+                            <p><strong>Contact info:</strong> {{ report.contact }}</p>
+                            {% if report.media %}
+                                <img src="{{ report.media.url }}" class="img-fluid rounded mb-2" alt="Disaster Image" width="300">
+                            {% endif %}
+                            <small class="text-muted"><i class="far fa-clock"></i> Reported on {{ report.timestamp|date:"F d, Y H:i" }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-success fw-bold"><i class="fas fa-check-circle"></i> No active disasters reported in the last 24 hours.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Past Disasters Section -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-secondary text-white">
+            <h4><i class="fas fa-history"></i> Past & Resolved Disasters</h4>
+        </div>
+        <div class="card-body">
+            {% if past_disasters %}
+                <ul class="list-group">
+                    {% for report in past_disasters %}
+                        <li class="list-group-item">
+                            <h5 class="text-secondary"><i class="fas fa-archive"></i> {{ report.disaster_type }}</h5>
+                            <p><strong>Location:</strong> {{ report.location }}</p>
+                            <p><strong>Description:</strong> {{ report.description }}</p>
+                            {% if report.media %}
+                                <img src="{{ report.media.url }}" class="img-fluid rounded mb-2" alt="Disaster Image" width="300">
+                            {% endif %}
+                            <small class="text-muted"><i class="far fa-clock"></i> Reported on {{ report.timestamp|date:"F d, Y H:i" }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted fw-bold"><i class="fas fa-info-circle"></i> No past disasters recorded.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

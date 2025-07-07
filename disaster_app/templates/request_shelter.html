@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Request Shelter</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding-top: 60px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .btn-submit {
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: black;
+            color: #ffcc00;
+        }
+        .header-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff3333;
+            text-align: center;
+        }
+        .emoji {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h2 class="header-text">🆘 Request Shelter</h2>
+    <p class="text-center">Fill in your details to request shelter and receive immediate assistance.</p>
+
+    <form method="POST" action="{% url 'request_shelter' %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">🏠 Full Name</label>
+            <input type="text" class="form-control" name="full_name" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">📞 Contact Number</label>
+            <input type="tel" class="form-control" name="contact" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">✉️ Email Address</label>
+            <input type="email" class="form-control" name="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">👨‍👩‍👧 Number of People</label>
+            <input type="number" class="form-control" name="people_count" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">📍 Current Location</label>
+            <input type="text" class="form-control" name="current_location" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">🏡 Preferred Shelter Location</label>
+            <input type="text" class="form-control" name="shelter_location" required>
+        </div>
+
+        <button type="submit" class="btn btn-submit w-100">🚀 Submit Request</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

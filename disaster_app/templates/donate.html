@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Money</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            text-align: center;
+        }
+        .donate-box {
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            margin-top: 50px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="text-light">Donate to {{ aid_request.name }}</h2>
+    <p class="text-light">They need <strong>${{ aid_request.amount_needed }}</strong> for {{ aid_request.reason }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Confirm Donation</button>
+    </form>
+</div>
+{% endblock %}
+
+</body>
+</html>

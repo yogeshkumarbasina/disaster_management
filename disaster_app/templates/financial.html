@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Financial Aid - Rescue Nexus</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: white;
+        }
+.logo
+        {
+        width : 100px;
+        height : 80px;
+        }
+        .navbar {
+            background: rgba(0, 0, 0, 0.6) !important;
+            padding: 10px 20px;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .nav-link {
+            color: white !important;
+        }
+        .nav-item {
+        font-size : 1rem;
+        padding-left : 3px;
+        }
+
+
+        /* Form Container */
+        .form-container {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            width: 400px;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #f0ad4e;
+            color: black;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #e09b3d;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background: #c8102e;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+            margin-right: 10px;
+        }
+
+        .footer h5 {
+            font-weight: bold;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .social-icons a {
+            font-size: 20px;
+            margin: 0 10px;
+            color: white;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            border-top: 1px solid white;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <img src="{% static 'images/logo.png' %}" class="logo">
+            <a class="navbar-brand" href="#">Rescue Nexus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'disasterreport' %}">Report Disaster</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'volunteer' %}">Volunteer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'food' %}">Food</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'relief_fund' %}">Relief Fund</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shelter' %}">Shelter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'medical_assistance' %}">Medical</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'submit_feedback' %}">Feedback</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Financial Aid Request Form -->
+    <div class="container">
+        <h1 class="text-center mt-5">Request Financial Aid</h1>
+        <div class="form-container">
+            <form action="{% url 'financial_requests' %}" method="POST">
+                {% csrf_token %}
+
+                <label>Name:</label>
+                <input type="text" name="name" required>
+
+                <label>Location:</label>
+                <input type="text" name="location" required>
+
+                <label>Reason:</label>
+                <textarea name="reason" required></textarea>
+
+                <label>Amount Needed:</label>
+                <input type="number" name="amount_needed" step="0.01" required>
+
+                <label>Payment Mode:</label>
+                <select name="payment_mode" required>
+                    <option value="UPI">UPI</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start">
+                    <div class="footer-logo">
+                       <img src="{% static 'images/logo.png' %}">
+                        <span style="font-weight:bold;font-size:20px;">Rescue Nexus</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Know More</h5>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'aboutus' %}">Our Journey</a></li>
+                        <li><a href="{% url 'disaster_reports' %}">Emergency Help</a></li>
+                        <li><a href="{% url 'disasterreport' %}">Request Aid</a></li>
+                        <li><a href={% url 'financial' %}>Donate Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Get in Touch</h5>
+                    <p>For inquiries regarding volunteering, fundraising, and local events:</p>
+                    <p><a href="mailto:info@rescuenexus.org">info@rescuenexus.org</a></p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2025 - Rescue Nexus. All Rights Reserved.</p>
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

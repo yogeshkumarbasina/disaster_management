@@ -1,0 +1,200 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescue Nexus - Feedback</title>
+
+    <!-- Bootstrap & FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* General Page Styling */
+        body {
+            background: #121212;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .logo {
+            width: 100px;
+            height: 80px;
+        }
+        .navbar {
+            background: rgba(0, 0, 0, 0.6) !important;
+            padding: 10px 20px;
+            width: 100%;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .nav-link {
+            color: white !important;
+        }
+
+        /* Feedback Container */
+        .feedback-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            width: 500px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            margin: 30px 0;
+        }
+        .feedback-container:hover {
+            transform: scale(1.05);
+        }
+        .feedback-container h1 {
+            font-size: 24px;
+            color: #ff4c4c;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            border: 2px solid #ff4c4c;
+            background: #1c1c1c;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+        textarea:focus {
+            border-color: white;
+            outline: none;
+        }
+        .btn-submit {
+            background: #ff4c4c;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-submit:hover {
+            background: darkred;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            background: #c8102e;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+        }
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+            margin-right: 10px;
+        }
+        .footer h5 {
+            font-weight: bold;
+        }
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer ul li {
+            margin-bottom: 8px;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <img src="{% static 'images/logo.png' %}" class="logo">
+            <a class="navbar-brand" href="#">Rescue Nexus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Report Disaster</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Volunteer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Food</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Relief Fund</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Shelter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Medical</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Feedback Section -->
+    <div class="feedback-container">
+        <h1>How was your experience? 😊</h1>
+        <form action="#" method="post">
+            {% csrf_token %}
+            <textarea name="description" placeholder="Enter your feedback..." required></textarea>
+            <br><br>
+            <button type="submit" class="btn btn-submit">Submit Feedback</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+     <!-- Footer -->
+       <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start">
+                    <div class="footer-logo">
+                       <img src="{% static 'images/logo.png' %}">
+                        <span style="font-weight:bold;font-size:20px;">Rescue Nexus</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Know More</h5>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'aboutus' %}">Our Journey</a></li>
+                        <li><a href="{% url 'disaster_reports' %}">Emergency Help</a></li>
+                        <li><a href="{% url 'disasterreport' %}">Request Aid</a></li>
+                        <li><a href="{% url 'financial' %}">Donate Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Get in Touch</h5>
+                    <p>For inquiries regarding volunteering, fundraising, and local events:</p>
+                    <p><a href="mailto:info@rescuenexus.org">info@rescuenexus.org</a></p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2025 - Rescue Nexus. All Rights Reserved.</p>
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

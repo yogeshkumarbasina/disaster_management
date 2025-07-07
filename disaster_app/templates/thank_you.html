@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You!</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .thank-you-card {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-card">
+        <h2>🎉 Thank You for Your Feedback!</h2>
+        <p>You will be redirected to the homepage shortly...</p>
+    </div>
+    <script>
+        setTimeout(() => { window.location.href = "/"; }, 3000);
+    </script>
+</body>
+</html>

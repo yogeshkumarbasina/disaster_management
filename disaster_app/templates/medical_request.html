@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Help Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            background-color: red;
+            border-color: red;
+        }
+        button:hover {
+            background-color: darkred;
+            transform: scale(1.05);
+        }
+        h2 {
+            color: red;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center text-danger">🚑 Request Medical Assistance</h2>
+            <form method="POST" action="{% url 'submit_medical_request' %}">
+    {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">👤 Full Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">📞 Contact Number</label>
+                    <input type="tel" class="form-control" name="contact" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">📍 Location</label>
+                    <input type="text" class="form-control" name="location" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">🩺 Type of Medical Issue</label>
+                    <select class="form-control" name="issue_type">
+                        <option value="injury">Injury</option>
+                        <option value="illness">Illness</option>
+                        <option value="emergency">Emergency</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">📝 Description</label>
+                    <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger w-100">🚀 Submit Request</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Food</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .logo
+        {
+        width : 100px;
+        height : 80px;
+        }
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.6) !important;
+            padding: 10px 20px;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .nav-link {
+            color: white !important;
+        }
+        .nav-item {
+        font-size : 1.2rem;
+        padding-left : 3px;
+        }
+        /* Form Container */
+        .form-container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.5);
+            margin: 50px auto;
+        }
+
+        /* Form Inputs */
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ff0000;
+            box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.7);
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s ease-in-out;
+        }
+        input:focus, select:focus, textarea:focus {
+            box-shadow: 0px 0px 15px rgba(255, 69, 0, 0.9);
+            border: 1px solid #ff4500;
+        }
+
+        .btn-custom {
+            background-color: #ff0000;
+            color: black;
+            font-weight: bold;
+            width: 100%;
+        }
+        .btn-custom:hover {
+            background-color: #f39c12;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <img src="{% static 'images/logo.png' %}" class="logo">
+        <a class="navbar-brand" href="#">Rescue Nexus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'disasterreport' %}">Report Disaster</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'volunteer' %}">Volunteer</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'food' %}">Food</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'shelter' %}">Shelter</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'medical_assistance' %}">Medical</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'submit_feedback' %}">Feedback</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'login' %}">Login</a></li>
+               {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Offer Food Form -->
+<div class="container">
+    <div class="form-container">
+        <h3 class="text-center">🎁 Offer Food</h3>
+        <form method="POST" action="{% url 'offerfood' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Provider Name</label>
+                <input type="text" name="provider_name" class="form-control" placeholder="Enter your name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contact</label>
+                <input type="tel" name="contact" class="form-control" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" name="location" class="form-control" placeholder="Enter location" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Food Type</label>
+                <select name="food_type" class="form-control" required>
+                    <option value="">Select</option>
+                    <option value="cooked">Cooked Food</option>
+                    <option value="dry">Dry Rations</option>
+                    <option value="baby">Baby Food</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Quantity</label>
+                <input type="number" name="quantity" class="form-control" min="1" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Expiry Date</label>
+                <input type="date" name="expiry_date" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Upload Image</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Additional Notes</label>
+                <textarea name="notes" class="form-control" rows="3" placeholder="Any special details"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-custom">Submit Offer</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

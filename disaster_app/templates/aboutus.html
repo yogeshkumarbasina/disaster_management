@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescue Nexus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(https://cdn.decohere.ai/cus_RmD9F1cjnGdnMI-stablevideo/outputs/1741528956356/image_0.png) center/cover no-repeat fixed;
+            margin: 0;
+        }
+        .logo
+        {
+        width : 100px;
+        height : 80px;
+        }
+        .navbar {
+            background: rgba(0, 0, 0, 0.6) !important;
+            padding: 10px 20px;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .nav-link {
+            color: white !important;
+        }
+        h1{
+            text-align: center;
+            color: white;
+            font-size:500%;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            gap: 40px;
+        }
+        .profiles {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            width: 100%;
+        }
+        .profile {
+            text-align: center;
+            padding : 80px
+        }
+        .profile img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile a
+        {
+          color:maroon;
+          font-weight: 700;
+        }
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: white;
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            padding: 50px;
+        }
+        .vision-card, .mission-card {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+            text-align: center;
+            cursor: pointer;
+            width: 40%;
+        }
+        .vision-card:hover, .vision-card:focus {
+            background-color: #ffbe0b;
+            color: black;
+        }
+        .mission-card:hover, .mission-card:focus {
+            background-color: #00a8e8;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <img src="{% static 'images/logo.png' %}" class="logo">
+            <a class="navbar-brand" href="#">Rescue Nexus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'disasterreport' %}">Report Disaster</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'volunteer' %}">Volunteer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'food' %}">Food</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shelter' %}">Shelter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'medical_assistance' %}">Medical</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'submit_feedback' %}">Feedback</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="btn btn-warning text-dark" href="{% url 'login' %}">Login</a></li>
+                   {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="card-container">
+        <div class="vision-card" tabindex="0">
+            <h3>🔭 Vision</h3>
+            <ul>
+                <li>Develop innovative disaster prediction and response systems.</li>
+                <li>Strengthen global partnerships for disaster mitigation.</li>
+                <li>Promote awareness through large-scale educational campaigns.</li>
+                <li>Enhance infrastructure to withstand disasters effectively.</li>
+                <li>Advance research in climate adaptation and crisis management.</li>
+                <li>Ensure vulnerable communities have access to emergency resources.</li>
+                <li>Encourage technological advancements in disaster preparedness.</li>
+                <li>Build a worldwide network for fast emergency response.</li>
+                <li>Foster a culture of proactive risk management.</li>
+                <li>Make disaster resilience a global priority.</li>
+            </ul>
+        </div>
+        <div class="mission-card" tabindex="0">
+            <h3>🛡️ Mission</h3>
+            <ul>
+                <li>Implement real-time disaster monitoring and alerts.</li>
+                <li>Establish rapid response teams in high-risk areas.</li>
+                <li>Develop smart evacuation plans using AI-driven data.</li>
+                <li>Provide immediate relief and recovery assistance.</li>
+                <li>Ensure medical and psychological aid reaches disaster zones.</li>
+                <li>Integrate renewable energy solutions for emergency situations.</li>
+                <li>Promote government policies for stronger disaster readiness.</li>
+                <li>Support research to combat climate-induced disasters.</li>
+                <li>Build a community of trained volunteers worldwide.</li>
+                <li>Enhance technological innovation in disaster resilience.</li>
+            </ul>
+        </div>
+    </div>
+   <div><h1> Our Team</h1>
+    <div class="container profiles" id="profiles">
+    <div>
+        <div class="profile">
+            <img src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg" alt="Profile 1">
+            <div class="name">Hemalatha Bora</div>
+            <a href="https://www.linkedin.com/in/hemalatha-bora-693012283">LinkedIn:>></a>
+        </div>
+        <div class="profile">
+            <img src="https://img.freepik.com/premium-vector/people-profile-icon_24877-40756.jpg" alt="Profile 2">
+            <div class="name"> Sai Prasanthi Gudipati</div>
+            <a href="https://www.linkedin.com/in/sai-prasanthi-gudipati-82601a334">LinkedIn:>></a>
+        </div>
+        </div>
+        <div>
+        <div class="profile">
+            <img src="https://cdn2.iconfinder.com/data/icons/business-and-finance-related-hand-gestures/256/face_female_blank_user_avatar_mannequin-512.png" alt="Profile 3">
+            <div class="name">Sowjanya Bodala</div>
+            <a href="https://www.linkedin.com/in/sowjanya-bodala-851b2533a">LinkedIn:>></a>
+        </div>
+        <div class="profile">
+            <img src="https://img.freepik.com/premium-vector/cartoon-illustration-manager_272293-4622.jpg?w=900" alt="Profile 4">
+            <div class="name">Yogesh Basana</div>
+            <a href="https://www.linkedin.com/in/basina-yogesh-kumar-a94420291">LinkedIn:>></a>
+        </div>
+    </div>
+    </div>
+   </div>
+
+</body>
+</html>

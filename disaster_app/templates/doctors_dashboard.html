@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard - Medical Requests</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .dashboard-container {
+            padding: 50px 0;
+        }
+
+
+.medical-card {
+    flex-grow: 1; /* Allows cards to expand evenly */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+      .medical-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.3);
+}
+
+        .status-pending {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .status-resolved {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .resolve-btn {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .resolve-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .back-btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background: #0056b3;
+        }
+        .equal-height {
+    display: flex;
+    align-items: stretch; /* Make both columns equal height */
+}
+
+.request-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure it takes full height */
+}
+    </style>
+</head>
+<body>
+
+  {% block content %}
+<div class="container">
+    <h1 class="text-center mt-4">🩺 Doctor's Dashboard - Medical Requests</h1>
+
+    <div class="row mt-4">
+        <!-- Pending Requests -->
+        <div class="col-md-6">
+            <h3 class="text-warning">⏳ Pending Requests</h3>
+            {% for request in pending_requests %}
+            <div class="card p-3 mb-3 shadow">
+                <h5>🧑‍⚕️ {{ request.name }}</h5>
+                <p>📍 <strong>Location:</strong> {{ request.location }}</p>
+                <p>🩺 <strong>Issue:</strong> {{ request.issue_type|title }}</p>
+                <p class="text-danger"><strong>Status:</strong> Pending</p>
+                <form method="post" action="{% url 'mark_as_resolved' request.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">✔️ Mark as Resolved</button>
+                </form>
+            </div>
+            {% empty %}
+            <p>No pending requests.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Resolved Requests -->
+        <div class="col-md-6">
+            <h3 class="text-success">✅ Resolved Requests</h3>
+            {% for request in resolved_requests %}
+            <div class="card p-3 mb-3 shadow bg-light">
+                <h5>🧑‍⚕️ {{ request.name }}</h5>
+                <p>📍 <strong>Location:</strong> {{ request.location }}</p>
+                <p>🩺 <strong>Issue:</strong> {{ request.issue_type|title }}</p>
+                <p class="text-success"><strong>Status:</strong> Resolved</p>
+            </div>
+            {% empty %}
+            <p>No resolved requests.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">⬅️ Back to Home</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
